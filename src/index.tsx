@@ -1,19 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { createRoot } from "react-dom/client";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { App } from "./components";
+import { store, persistor } from "./store";
+import theme from "./styles/theme";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <PersistGate loading={null} persistor={persistor}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </PersistGate>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
